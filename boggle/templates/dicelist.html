@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DiceList</title>
+</head>
+<body>
+    <h1>DiceList:</h1>
+    <ul>
+    {% for dice in dices %}
+        <li>{{ dice.id }}: {{ dice.letters }}</li>
+    {% endfor %}
+    </ul>
+    <br>
+    <a href="../">Go back</a>
+</body>
+</html>

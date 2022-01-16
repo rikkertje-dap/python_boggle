@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PlayerList</title>
+</head>
+<body>
+    <h1>PlayerList</h1>
+    <ul>
+    {% for player in players %}
+        <li>{{ player.id }}: {{ player.name }}</li>
+    {% endfor %}
+    </ul>
+    <br>
+    <a href="../">Go back</a>
+</body>
+</html>

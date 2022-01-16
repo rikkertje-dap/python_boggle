@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DiceList</title>
+</head>
+<body>
+{% if session['player_id'] %}
+    <h1>Welcome to Boggle, {{session["player_name"]}}!</h1>
+{% else %}
+    <h1>Welcome to Boggle!</h1>
+{% endif %}
+<ul>
+    {% if session['player_id'] %}
+        <li>
+            <a href="\games">Show my games</a>
+        </li>
+        <li>
+            <a href="\game">Start new game</a>
+        </li>
+        <li>
+        <a href="\logout">Log out</a>
+        </li>
+    {% else %}
+        <li>
+            <a href="\login">Log in</a>
+        </li>
+        <li>
+            <a href="\register">Register</a>
+        </li>
+    {% endif %}
+</ul>
+</body>
+</html>
