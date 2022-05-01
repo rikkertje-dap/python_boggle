@@ -3,16 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <style>
+        body{
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+        }
+        h1 {
+            margin: 4px;
+        }
+        .login-panel{
+            height: 336px;
+            width: 336px;
+            border: 5px solid orange;
+            border-radius: 64px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin-top: 16px;
+        }
+        .login-button{
+            all: unset;
+            cursor: pointer;
+            background: lightgrey;
+            border: 3px solid darkgrey;
+            border-radius: 16px;
+            padding: 8px;
+            font-size: 12px;
+            margin: 8px 0px;
+        }
+        .login-button:hover{
+            background: darkgrey;
+            border: 3px solid grey;
+        }
+        .login-input{
+            all: unset;
+            cursor: text;
+            border: 3px solid darkgrey;
+            border-radius: 16px;
+            padding: 8px;
+            font-size: 12px;
+            margin: 8px 0px;
+        }
+        .login-input:focus{
+            border: 3px solid grey;
+        }
+    </style>
 </head>
 <body>
-    <h1>Login</h1>
-    <form action="/login" method = "post">
-        <label for="name">Enter your name</label><br>
-        <input type="text" name="name" placeholder="Name" /><br>
-        <label for = "password">Enter password</label><br>
-        <input type="password" id="password" name="password" placeholder="password" /><br>
-        <button type="submit">Register</button>
-    </form>
-    {{message}}
+    <div class="login-panel">
+        <div>
+            <h1>Login</h1>
+            <form action="/login" method = "post">
+                <label for="name">Enter your name</label><br>
+                <input class="login-input" type="text" name="name" placeholder="Name" /><br>
+                <label for = "password">Enter password</label><br>
+                <input class="login-input" type="password" id="password" name="password" placeholder="password" /><br>
+                <button class="login-button" type="submit">Log in</button>
+                <a class="login-button" href="/">Go back</a>
+            </form><br>
+            <span style="color: red;">{{message}}</span>
+        </div>
+    </div>
 </body>
 </html>

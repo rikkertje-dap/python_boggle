@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>GameList</title>
+    <title>Highscore</title>
     <style>
         body{
             font-family: "Comic Sans MS", "Comic Sans", cursive;
@@ -65,37 +65,19 @@
 </head>
 <body>
     <div class="title-block">
-        <h1 class="page-title">GameList</h1>
+        <h1 class="page-title">Highscores</h1>
         <a style="margin: 26px;" class="game-action go-back" href="../">Go back</a>
     </div>
     <div class="game-list">
-        <h2>Ongoing games:</h2>
         <ul>
-        {% for game in games if game.end_time > now %}
+        {% for game in games | sort(attribute='score',  reverse = True) if game.end_time < now %}
             <li class="game">
-                <span><b>ID:</b> {{ game.id }}</span>
-                <span><b>Player:</b> {{ game.player.name }}</span>
-                <span><b>Score:</b> {{ game.score }}</span>
-                <span><b>Started:</b> {{  game.start_time.strftime('%Y-%m-%d %H:%M:%S') }}</span>
-                <span><b>Ends:</b> {{  game.end_time.strftime('%Y-%m-%d %H:%M:%S') }}</span>
-                <span><a class="game-action" href="game/{{ game.id }}">Continue game</a></li></span>
-        {% endfor %}
-        </ul>
-    </div>
-    <div class="game-list">
-        <h2>Completed games:</h2>
-        <ul>
-        {% for game in games if game.end_time < now %}
-            <li class="game">
-                <span><b>ID:</b> {{ game.id }}</span>
                 <span><b>Player:</b> {{ game.player.name }}</span>
                 <span><b>Score:</b> {{ game.score }}</span>
                 <span><b>Started:</b> {{  game.start_time.strftime('%Y-%m-%d %H:%M:%S') }}</span>
                 <span><b>Ended:</b> {{  game.end_time.strftime('%Y-%m-%d %H:%M:%S') }}</span>
-                <span><a class="game-action" href="game/{{ game.id }}">View details</a></li></span>
         {% endfor %}
         </ul>
     </div>
-    <br>
 </body>
 </html>

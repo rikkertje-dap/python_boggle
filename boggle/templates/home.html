@@ -2,33 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>DiceList</title>
+    <title>Boggle!</title>
+    <style>
+        body{
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+        }
+        ul{
+            padding: 0;
+        }
+        .game-action{
+            all: unset;
+            cursor: pointer;
+            background: lightgrey;
+            border: 3px solid darkgrey;
+            border-radius: 16px;
+            padding: 8px;
+            font-size: 12px;
+        }
+        .game-action:hover{
+            background: darkgrey;
+            border: 3px solid grey;
+        }
+        .title-block {
+            display: block;
+            border: 6px solid orange;
+            border-radius: 64px;
+            width: 1000px;
+            padding: 16px;
+            padding-left: 32px;
+            margin: 32px;
+        }
+    </style>
 </head>
 <body>
-{% if session['player_id'] %}
-    <h1>Welcome to Boggle, {{session["player_name"]}}!</h1>
-{% else %}
-    <h1>Welcome to Boggle!</h1>
-{% endif %}
-<ul>
-    {% if session['player_id'] %}
-        <li>
-            <a href="\games">Show my games</a>
-        </li>
-        <li>
-            <a href="\game">Start new game</a>
-        </li>
-        <li>
-        <a href="\logout">Log out</a>
-        </li>
-    {% else %}
-        <li>
-            <a href="\login">Log in</a>
-        </li>
-        <li>
-            <a href="\register">Register</a>
-        </li>
-    {% endif %}
-</ul>
+    <div class="title-block">
+        {% if session['player_id'] %}
+            <h1>Welcome to Boggle, {{session["player_name"]}}!</h1>
+        {% else %}
+            <h1>Welcome to Boggle!</h1>
+        {% endif %}
+        <ul>
+            {% if session['player_id'] %}
+                    <a class="game-action" href="\game">Start new game</a>
+                    <a class="game-action" href="\games">Show my games</a>
+                    <a class="game-action" href="\highscores">Show highscore</a>
+                    <a class="game-action" href="\logout">Log out</a>
+            {% else %}
+                    <a class="game-action" href="\login">Log in</a>
+                    <a class="game-action" href="\register">Register</a>
+            {% endif %}
+        </ul>
+    </div>
 </body>
 </html>

@@ -12,11 +12,6 @@ from model.player import Player
 playercontroller = Blueprint('playercontroller', __name__)
 
 
-@app.route('/player', methods=['GET'])
-def show_players():
-    return render_template('playerlist.html', players=Player.query.all())
-
-
 @app.route('/login', methods=['GET'])
 def show_login():
     return render_template('login.html')
@@ -25,12 +20,15 @@ def show_login():
 @app.route('/login', methods=['POST'])
 def do_login():
     player = Player.query.filter(Player.name == request.form['name']).first()
-    if player.password == request.form['password']:
-        session["player_id"] = player.id
-        session["player_name"] = player.name
-        return redirect(url_for('app_index'))
+    if player:
+        if player.password == request.form['password']:
+            session["player_id"] = player.id
+            session["player_name"] = player.name
+            return redirect(url_for('app_index'))
+        else:
+            return render_template('login.html', message="Incorrect password")
     else:
-        return render_template('login.html', message="Incorrect password for this user")
+        return render_template('login.html', message="No user found")
 
 @app.route('/logout', methods=['GET'])
 def do_logout():

@@ -8,11 +8,9 @@ from model.game import Game
 from model.player import Player
 from model.word import Word
 
-from controller.dicecontroller import dicecontroller
 from controller.gamecontroller import gamecontroller
 from controller.playercontroller import playercontroller
 
-app.register_blueprint(dicecontroller)
 app.register_blueprint(gamecontroller)
 app.register_blueprint(playercontroller)
 
@@ -26,6 +24,4 @@ def get_session():
 
 if __name__ == "__main__":
     db.create_all()
-    word1 = Word("yurt")
-    word1.is_word_valid()
     app.run(host='0.0.0.0', debug=True)

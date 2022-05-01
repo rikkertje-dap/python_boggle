@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+    <style>
+        body{
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+        }
+        .error-block {
+            display: block;
+            border: 6px solid orange;
+            border-radius: 64px;
+            width: 1000px;
+            padding: 16px;
+            padding-left: 32px;
+            margin: 32px;
+        }
+        .title{
+            display: inline-block;
+            margin: 8px;
+        }
+        .go-back{
+            all: unset;
+            cursor: pointer;
+            background: lightgrey;
+            border: 3px solid darkgrey;
+            border-radius: 16px;
+            padding: 8px;
+            font-size: 12px;
+            display: inline-block;
+            float: right;
+            margin: 16px;
+        }
+        .message{
+            margin: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-block">
+        <h1 class="title">Oops...</h1><a class="go-back" href="/">Go back</a>
+        <p class="message" style="color: red;">{{message}}</p>
+    </div>
+</body>
+</html>

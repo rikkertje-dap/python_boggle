@@ -3,18 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <title>Game</title>
+    <style>
+        body{
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+        }
+        .game-container{
+            background-color: orange;
+            height: 320px;
+            width: 320px;
+            border-radius: 64px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+        .game-board {
+            border-radius: 32px;
+            background-color: blue;
+            height: 240px;
+            width: 240px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+        .game-button{
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-weight: bold;
+            background-color: white;
+            border-radius: 16px;
+            border: none;
+            height: 48px;
+            width: 48px;
+            margin: 2px;
+            cursor: pointer;
+        }
+        .game-button:hover{
+            background-color: lightgrey;
+        }
+        .game-button:active{
+            background-color: grey;
+        }
+        .game-button:active:disabled{
+            background-color: lightgrey;
+        }
+        .game-button:disabled{
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-weight: bold;
+            background-color: lightgrey;
+            border-radius: 16px;
+            border: none;
+            height: 48px;
+            width: 48px;
+            margin: 2px;
+            cursor: default;
+        }
+        .game-info{
+            height: 310px;
+            width: 310px;
+            border: 5px solid orange;
+            border-radius: 64px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin-top: 16px;
+        }
+        .game-words-container{
+            width: 310px;
+            border: 5px solid orange;
+            border-radius: 64px;
+            margin-left: 32px;
+        }
+        .game-words{
+            height: 390px;
+            margin: 32px;
+        }
+        ul{
+            list-style: none;
+            padding: 0;
+        }
+        .game-actions{
+            height: 150px;
+            width: 310px;
+            border: 5px solid orange;
+            border-radius: 64px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin-left: 32px;
+            margin-bottom: 32px;
+        }
+        .game-action{
+            all: unset;
+            cursor: pointer;
+            background: lightgrey;
+            border: 3px solid darkgrey;
+            border-radius: 16px;
+            padding: 8px;
+            font-size: 12px;
+        }
+        .game-action:hover{
+            background: darkgrey;
+            border: 3px solid grey;
+        }
+    </style>
 </head>
 <body>
-    <h1>Game ID: {{ game.id }}</h1>
-    <table>
-        {% for row in game.board %}
-        {% set outer_loop = loop %}
-            <tr>
-                {% for cell in row %}
-                    <td id="{{outer_loop.index0}}{{loop.index0}}">{{ cell }}</td>
-                {% endfor %}
-            </tr>
-        {% endfor %}
-    </table>
+    <div style="display: flex;">
+        <div>
+            <div class="game-container">
+                <table class="game-board">
+                    {% for row in game.board %}
+                    {% set outer_loop = loop %}
+                        <tr>
+                            {% for cell in row %}
+                            <td>
+                                <button {% if game.end_time < now %} disabled {% endif %}
+                                        class="game-button" onclick="submitLetter({{outer_loop.index0}}, {{loop.index0}});">{{ cell }}</button>
+                            </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="game-info">
+                <ul style="width: 75%;">
+                    <li><b>ID:</b> {{ game.id }}</li>
+                    <li><b>Score:</b> {{ game.score }}</li>
+                    <li><b>Player:</b> {{ game.player.name }}</li>
+                    <li><b>Started:</b> {{  game.start_time.strftime('%Y-%m-%d %H:%M:%S') }}</li>
+                    <li><b>Ends:</b> {{  game.end_time.strftime('%Y-%m-%d %H:%M:%S') }}</li>
+                    <li>&nbsp;</li>
+                    <li><b>Current input:</b> {{game.current_input}}</li>
+                    <li><b>Time Left:</b> <span id="GameRemainingTime"></span></li>
+                    <li>&nbsp;</li>
+                    <li><b>Message:</b> <br>{{game.message}}</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <div class="game-actions">
+                <a class="game-action" href="/games">Go back</a>
+                {% if game.end_time > now %}
+                <button class="game-action" onclick="clearWord()">Clear word</button>
+                <button class="game-action" onclick="submitWord()">Submit word</button>
+                {% endif %}
+            </div>
+            <div class="game-words-container">
+                <div class="game-words">
+                    <h2>Words found:</h2>
+                    <ul>
+                        {% for word in game.word_list %}
+                            <li>{{word}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <span id="GameEndTime" hidden>{{game.end_time}}</span>
+    </div>
+<script>
+    function submitLetter(x,y){
+        window.location.href = "/game/" + {{game.id}} +"/letter?x=" + x + "&y=" + y;
+    }
+
+    function submitWord(){
+        window.location.href = "/game/" + {{game.id}} +"/submit";
+    }
+
+    function clearWord(){
+        window.location.href = "/game/" + {{game.id}} +"/clear";
+    }
+
+    function millisToMinutesAndSeconds(millis) {
+      var minutes = Math.floor(millis / 60000);
+      var seconds = ((millis % 60000) / 1000).toFixed(0);
+      return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+    }
+
+    function setRemainingTime(){
+        var elementEndTime = document.getElementById('GameEndTime');
+        var endTimeText = elementEndTime.innerText;
+        var endTime = Date.parse(endTimeText);
+        var remainingTime = endTime - Date.now();
+        var elementRemainingTime = document.getElementById('GameRemainingTime');
+        if(remainingTime > 0){
+            elementRemainingTime.innerHTML = millisToMinutesAndSeconds(remainingTime);
+        }else{
+            elementRemainingTime.innerHTML = "0:00";
+        }
+    }
+    setRemainingTime();
+    setInterval(function(){
+        setRemainingTime();
+    }, 1000)
+</script>
 </body>
 </html>

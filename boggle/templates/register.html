@@ -3,19 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
+    <style>
+        body{
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+        }
+        h1 {
+            margin: 4px;
+        }
+        .register-panel{
+            height: 400px;
+            width: 336px;
+            border: 5px solid orange;
+            border-radius: 64px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin-top: 16px;
+        }
+        .register-button{
+            all: unset;
+            cursor: pointer;
+            background: lightgrey;
+            border: 3px solid darkgrey;
+            border-radius: 16px;
+            padding: 8px;
+            font-size: 12px;
+            margin: 8px 0px;
+        }
+        .register-button:hover{
+            background: darkgrey;
+            border: 3px solid grey;
+        }
+        .register-input{
+            all: unset;
+            cursor: text;
+            border: 3px solid darkgrey;
+            border-radius: 16px;
+            padding: 8px;
+            font-size: 12px;
+            margin: 8px 0px;
+        }
+        .register-input:focus{
+            border: 3px solid grey;
+        }
+    </style>
 </head>
 <body>
-    <h1>Register</h1>
-    <form action="/register" method = "post">
-        <label for="name">Enter your name</label><br>
-        <input type="text" name="name" placeholder="Name" /><br>
-        <label for = "password">Enter password</label><br>
-        <input type="password" id="password" name="password" placeholder="password" /><br>
-        <label for="confirm_password">Enter password</label><br>
-        <input type = "password" id="confirm_password" name="confirm_password" placeholder="confirm password" /><br>
+    <div class="register-panel">
+        <div>
+            <h1>Register</h1>
+            <form action="/register" method = "post">
+                <label for="name">Enter your name</label><br>
+                <input class="register-input" type="text" name="name" placeholder="Name" /><br>
+                <label for = "password">Enter password</label><br>
+                <input class="register-input" type="password" id="password" name="password" placeholder="password" /><br>
+                <label for="confirm_password">Enter password</label><br>
+                <input class="register-input" type = "password" id="confirm_password" name="confirm_password" placeholder="confirm password" /><br>
 
-        <button type="submit">Register</button>
-    </form>
+                <button class="register-button" type="submit">Register</button>
+                <a class="register-button" href="/">Go back</a>
+            </form>
+        </div>
+    </div>
     <script>
         var password = document.getElementById("password")
         var confirm_password = document.getElementById("confirm_password");
